@@ -9,3 +9,17 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias HologramSkeleton.Repo
+alias HologramSkeleton.Task.Tasks
+
+[
+  "Buy groceries",
+  "Write project report",
+  "Schedule dentist appointment",
+  "Review pull requests",
+  "Plan weekend trip"
+]
+|> Enum.each(fn title ->
+  Repo.insert!(%Tasks{title: title})
+end)
