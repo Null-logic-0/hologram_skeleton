@@ -5,38 +5,33 @@ defmodule HologramSkeleton.TasksPage do
   layout HologramSkeleton.DefaultLayout
 
   alias HologramSkeleton.Task
-  alias Hologram.UI.Link
+
+  @channel :tasks
 
   def template do
     ~HOLO"""
     <h1>Tasks</h1>
 
-    <form $change="form_changed" $submit="form_submitted">
-      <input type="text" name="title" placeholder="Create task..." value={@input_value} />
-      <div>{@validation_error}</div>
-      <button type="submit">Create</button>
-    </form>
+    <TaskForm
+      change_handler="form_changed"
+      submit_handler="form_submitted"
+      input_value={@input_value}
+      validation_error={@validation_error}
+    />
 
-    <ul>
-      {%for task <- @tasks}
-        <li>
-        <Link to={HologramSkeleton.TaskPage, id: task.id}>
-          {task.title}
-        </Link>
-
-        <button $click={:delete_task, id: task.id}>Delete</button>
-        </li>
-      {/for}
-    </ul>
+    <TaskList tasks={@tasks} />
 
     """
   end
 
-  def init(_params, component, _server) do
-    component
-    |> put_state(:tasks, Task.list_tasks())
-    |> put_state(:input_value, "")
-    |> put_state(:validation_error, "")
+  def init(_params, component, server) do
+    component =
+      component
+      |> put_state(:tasks, Task.list_tasks())
+      |> put_state(:input_value, "")
+      |> put_state(:validation_error, "")
+
+    {component, put_subscription(server, @channel)}
   end
 
   def action(:form_changed, params, component) do
@@ -79,8 +74,18 @@ defmodule HologramSkeleton.TasksPage do
 
   def command(:create_task, params, server) do
     case Task.create_tasks(%{title: params.title}) do
-      {:ok, task} -> put_action(server, :task_created, task: task)
-      {:error, _changeset} -> put_action(server, :task_create_failed)
+      {:ok, task} ->
+        server
+        |> put_action(:task_created, task: task)
+        |> put_broadcast_except(
+          {:instance, server.instance_id},
+          @channel,
+          :task_created,
+          task: task
+        )
+
+      {:error, _changeset} ->
+        put_action(server, :task_create_failed)
     end
   end
 
@@ -89,6 +94,10 @@ defmodule HologramSkeleton.TasksPage do
     |> Task.get_tasks!()
     |> Task.delete_tasks()
 
-    put_action(server, :task_deleted, id: params.id)
+    server
+    |> put_action(:task_deleted, id: params.id)
+    |> put_broadcast_except({:instance, server.instance_id}, @channel, :task_deleted,
+      id: params.id
+    )
   end
 end
