@@ -11,9 +11,19 @@ defmodule HologramSkeleton.TaskPage do
 
   def template do
     ~HOLO"""
-    <h1>Task {@task.id}</h1>
-    <p>{@task.title}</p>
-    <Link to={HologramSkeleton.TasksPage}>Back</Link>
+    <div class="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+      <div class="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-lg ring-1 ring-slate-200">
+        <p class="text-sm font-medium uppercase tracking-wide text-slate-400">Task {@task.id}</p>
+        <h1 class="mt-2 text-2xl font-bold text-slate-900">{@task.title}</h1>
+
+        <Link
+          to={HologramSkeleton.TasksPage}
+          class="mt-8 inline-block text-sm font-semibold text-brand hover:underline"
+        >
+          ← Back
+        </Link>
+      </div>
+    </div>
     """
   end
 

@@ -9,7 +9,8 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/hologram_skeleton_web.ex",
-    "../lib/hologram_skeleton_web/**/*.*ex"
+    "../lib/hologram_skeleton_web/**/*.*ex",
+    "../app/**/*.*ex"
   ],
   theme: {
     extend: {

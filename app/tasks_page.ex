@@ -5,22 +5,34 @@ defmodule HologramSkeleton.TasksPage do
   layout HologramSkeleton.DefaultLayout
 
   alias HologramSkeleton.Task
+  alias Hologram.UI.Link
 
   @channel :tasks
 
   def template do
     ~HOLO"""
-    <h1>Tasks</h1>
+    <div class="flex min-h-screen justify-center bg-slate-50 px-4 py-16">
+      <div class="w-full max-w-xl rounded-2xl bg-white p-8 shadow-lg ring-1 ring-slate-200">
+        <div class="mb-6 flex items-center justify-between">
+          <h1 class="text-2xl font-bold text-slate-900">Tasks</h1>
+          <Link
+            to={HologramSkeleton.HomePage}
+            class="text-sm font-semibold text-brand hover:underline"
+          >
+            ← Home
+          </Link>
+        </div>
 
-    <TaskForm
-      change_handler="form_changed"
-      submit_handler="form_submitted"
-      input_value={@input_value}
-      validation_error={@validation_error}
-    />
+        <TaskForm
+          change_handler="form_changed"
+          submit_handler="form_submitted"
+          input_value={@input_value}
+          validation_error={@validation_error}
+        />
 
-    <TaskList tasks={@tasks} />
-
+        <TaskList tasks={@tasks} />
+      </div>
+    </div>
     """
   end
 
