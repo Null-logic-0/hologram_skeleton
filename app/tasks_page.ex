@@ -20,7 +20,7 @@ defmodule HologramSkeleton.TasksPage do
         ← Home
       </Link>
 
-      <form class="mb-6" $submit={:form_submitted} class="mt-6 flex items-center gap-2">
+      <form $submit={:form_submitted} class="my-6 flex items-center gap-2">
         <input
           type="text"
           name="title"
