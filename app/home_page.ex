@@ -8,40 +8,43 @@ defmodule HologramSkeleton.HomePage do
 
   def template do
     ~HOLO"""
-    <div class="flex min-h-screen items-center justify-center bg-slate-50 px-4">
-      <div class="w-full max-w-sm rounded-2xl bg-white p-8 text-center shadow-lg ring-1 ring-slate-200">
-        <h1 class="text-2xl font-bold text-slate-900">Hello from Hologram!</h1>
+      <div class="flex items-center justify-center px-4">
+      <div class="rounded-2xl bg-base-200 p-8 text-center shadow-lg">
+        <h1 class="text-2xl font-bold">Hello from Hologram!</h1>
 
         <p class="mt-6 text-5xl font-extrabold tabular-nums text-brand">{@count}</p>
         <p class="mt-1 text-sm font-medium uppercase tracking-wide text-slate-400">Count</p>
 
-        <div class="mt-6 flex justify-center gap-2">
+        <div class="mt-6 flex items-center justify-center gap-2">
           <button
             $click={:decrement, by: 1}
-            class="rounded-lg bg-slate-100 px-4 py-2 font-semibold text-slate-700 transition hover:bg-slate-200"
+            class="btn btn-primary"
           >
             −
           </button>
           <button
             $click={:reset, by: 0}
-            class="rounded-lg bg-slate-100 px-4 py-2 font-semibold text-slate-700 transition hover:bg-slate-200"
+            class="btn btn-outline"
           >
             Reset
           </button>
           <button
             $click={:increment, by: 1}
-            class="rounded-lg bg-brand px-4 py-2 font-semibold text-white transition hover:opacity-90"
+            class="btn btn-primary"
           >
             +
           </button>
         </div>
 
+        <div class="divider"></div>
+
         <Link
           to={HologramSkeleton.TasksPage}
-          class="mt-8 inline-block text-sm font-semibold text-brand hover:underline"
+          class="btn btn-primary btn-outline"
         >
           Tasks →
         </Link>
+
       </div>
     </div>
     """

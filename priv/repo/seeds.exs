@@ -14,11 +14,16 @@ alias HologramSkeleton.Repo
 alias HologramSkeleton.Task.Tasks
 
 [
-  "Buy groceries",
-  "Write project report",
-  "Schedule dentist appointment",
-  "Review pull requests",
-  "Plan weekend trip"
+  "Smoke the Hologram docs",
+  "Catch the BEAM in 4K",
+  "Run the code, not your mouth",
+  "Ship the damn feature",
+  "Hunt the bug",
+  "Catch up with the codebase",
+  "Put the PRs on trial",
+  "Merge or die trying",
+  "Break the compiler",
+  "Make the machine talk"
 ]
 |> Enum.each(fn title ->
   Repo.insert!(%Tasks{title: title})

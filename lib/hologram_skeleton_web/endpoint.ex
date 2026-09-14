@@ -49,7 +49,7 @@ defmodule HologramSkeletonWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  
+
   plug Hologram.Router
   plug HologramSkeletonWeb.Router
 end
